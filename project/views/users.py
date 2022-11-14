@@ -6,13 +6,13 @@ from project.dao.models.user import UserSchema
 from project.services.authentification import get_email_from_header, change_the_password
 from project.utils import auth_required
 
-user_ns = Namespace('users')
+user_ns = Namespace('user')
 
 user_schema = UserSchema()
 users_schema = UserSchema(many=True)
 
 
-@user_ns.route("/<username>")
+@user_ns.route("/")
 class UserViews(Resource):
     @auth_required
     def get(self):
@@ -57,8 +57,8 @@ class UserViews(Resource):
 class UserPassViews(Resource):
     @auth_required
     def put(self):
-        password_1 = request.json.get('password_1')
-        password_2 = request.json.get('password_2')
+        password_1 = request.json.get('old_password')
+        password_2 = request.json.get('new_password')
         header = request.headers['Authorization']
         email = get_email_from_header(header)
 

@@ -46,3 +46,9 @@ class UserDAO:
 
         self.session.add(user)
         self.session.commit()
+
+    def update_password(self, user):
+
+
+        self.session.add(user)
+        self.session.commit()

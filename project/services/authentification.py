@@ -6,10 +6,10 @@ import hmac
 from flask import abort
 import jwt
 
-from project.setup_db import db
 
 from project.constant import SECRET, ALGO, PWD_HASH_SALT, PWD_HASH_ITERATIONS
 from project.container import user_service
+from project.setup_db import db
 
 
 def generate_tokens(email, password, is_refresh=False):
@@ -76,8 +76,7 @@ def get_email_from_header(header: str):
 
 
 def change_the_password(user_email, pass1, pass2):
-
-    user = user_service.get_by_email(user_email)
+    user = user_service.get_user_by_email(user_email)
 
     db_pass = user.password
 
@@ -86,9 +85,11 @@ def change_the_password(user_email, pass1, pass2):
     if is_confirmed:
 
         user.password = user_service.get_hash(pass2)
+        print(user)
+        user_service.update_password(user)
 
-        db.session.add(user)
-        db.session.commit()
+        # db.session.update(user)
+        # db.session.commit()
 
         return '', 204
 

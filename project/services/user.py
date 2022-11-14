@@ -25,6 +25,10 @@ class UserService:
 
         self.dao.update_user(data)
 
+    def update_password(self, data):
+
+        self.dao.update_password(data)
+
     def get_all(self):
         return self.dao.get_all()
 
